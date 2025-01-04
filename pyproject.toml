@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "sae-pytorch"
+version = "0.1.0"
+description = ""
+authors = ["Badr-Eddine Marani <badr-eddine.marani@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+torch = {version = "^2.5.1+cu121", source = "pytorch-gpu-src"}
+transformers = "^4.47.1"
+safetensors = "^0.5.0"
+huggingface-hub = "^0.27.0"
+datasets = "^3.2.0"
+
+[[tool.poetry.source]]
+name = "pytorch-gpu-src"
+url = "https://download.pytorch.org/whl/cu121"
+priority = "explicit"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.4"
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
