@@ -133,7 +133,7 @@ class SAE(nn.Module, PyTorchModelHubMixin):
             "l0_loss": (acts != 0).float().mean(),
         }
         if self.mode == "relu":
-            loss += self.l1_coef * out["l1_loss"]
+            out["loss"] += self.l1_coef * out["l1_loss"]
         return out
 
 
