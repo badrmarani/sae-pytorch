@@ -147,7 +147,7 @@ def main(
     dict_size: Optional[int] = None,
     expansion_factor: int = 4,
     shard_size: int = 10_000,
-    batch_size: int = 2048,
+    number_of_tokens_per_batch: int = 2048,
     learning_rate: float = 1e-4,
     num_epochs: int = 10,
     model_layer_index: int = 8,
@@ -166,7 +166,7 @@ def main(
         "shard_size": shard_size,
         "acts_size": acts_size,
         "dict_size": dict_size,
-        "batch_size": batch_size,
+        "number_of_tokens_per_batch": number_of_tokens_per_batch,
         "expansion_factor": expansion_factor,
         "learning_rate": learning_rate,
         "num_epochs": num_epochs,
@@ -203,6 +203,7 @@ def main(
     activations = load_cached_activations(activations_path)
     dataset = TensorDataset(activations)
     train_dataset, eval_dataset = random_split(dataset, [0.8, 0.2])
+    batch_size = number_of_tokens_per_batch // activations["tensors"].size(1)
     train_loader = DataLoader(train_dataset, batch_size, shuffle=True)
     eval_loader = DataLoader(eval_dataset, batch_size, shuffle=False)
 
@@ -255,7 +256,7 @@ if __name__ == "__main__":
     parser.add_argument("--acts_size", type=int)
     parser.add_argument("--dict_size", type=int, required=False)
     parser.add_argument("--expansion_factor", type=int, default=4)
-    parser.add_argument("--batch_size", type=int, default=2048)
+    parser.add_argument("--number_of_tokens_per_batch", type=int, default=2048)
     parser.add_argument("--learning_rate", type=float, default=1e-4)
     parser.add_argument("--num_epochs", type=int, default=10)
     parser.add_argument("--model_layer_index", type=int, default=8)
@@ -276,7 +277,8 @@ if __name__ == "__main__":
         shard_size=args.shard_size,
         acts_size=args.acts_size,
         dict_size=args.dict_size,
-        batch_size=args.batch_size,
+        expansion_factor=args.expansion_factor,
+        number_of_tokens_per_batch=args.number_of_tokens_per_batch,
         learning_rate=args.learning_rate,
         num_epochs=args.num_epochs,
         model_layer_index=args.model_layer_index,
