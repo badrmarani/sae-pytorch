@@ -3,7 +3,7 @@
 python main.py \
     --run_name topksae_gpt2_layer8_tiny_shakespeare \
     --model_name_or_path openai-community/gpt2 \
-    --dataset_name_or_path tiny_shakespeare \
+    --dataset_name_or_path HuggingFaceFW/fineweb-edu \
     --shard_size 10_000 \
     --acts_size 768 \
     --expansion_factor 4 \

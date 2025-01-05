@@ -52,7 +52,7 @@ def cache_activations(
     )
 
     activations, shard_index = [], 1
-    dataset = load_dataset(dataset_name_or_path, split="train")
+    dataset = load_dataset(dataset_name_or_path, "sample-10BT", split="train")
     num_steps = len(dataset) // batch_size
     for i in range(0, len(dataset), num_steps):
         x = dataset[i : i + num_steps]["train"]
